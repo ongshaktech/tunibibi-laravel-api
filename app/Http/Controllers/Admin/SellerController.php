@@ -118,6 +118,7 @@ class SellerController extends Controller
         $new_data = array();
         foreach ($data as $value) {
             array_push($new_data, [
+                "id" => $value->id,
                 "name" => $value->name,
                 "code" => $value->code,
                 "flag" => config("app.url") . "storage/country/" . $value->flag,

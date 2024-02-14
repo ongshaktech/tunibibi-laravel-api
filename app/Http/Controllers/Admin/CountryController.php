@@ -25,7 +25,7 @@ class CountryController extends Controller
             ]);
         }
 
-        return response()::json([
+        return response()->json([
             "error" => false,
             "data" => $new_data
         ]);
