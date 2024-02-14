@@ -21,7 +21,7 @@ class BannerController extends Controller
             $banners = array();
 
             for ($a = 0; $a < count($data); $a++) {
-                array_push($banners, config("app.url") . "storage/buyer_banners/" . $data[$a]["image"]);
+                array_push($banners, config("app.url") . "storage/seller/banner/" . $data[$a]["image"]);
             }
 
             return response()->json([
@@ -48,11 +48,11 @@ class BannerController extends Controller
 
             $banners = array();
 
-            for ($a = 0; $a < count($data); $a++) {
+            foreach ($data as $value) {
                 array_push($banners, [
-                    "id" => $data[$a]["id"],
-                    "country" => $data[$a]["country"],
-                    "img" => config("app.url") . "storage/buyer_banners/" . $data[$a]["image"],
+                    "id" => $value->id,
+                    "country" => $value->country,
+                    "img" => config("app.url") . "storage/buyer/banner/" . $value->image,
                 ]);
             }
 
@@ -79,7 +79,7 @@ class BannerController extends Controller
         $fileName = uniqid() . '.' . $extension;
         $imageData = base64_decode($imageData);
 
-        Storage::disk("public")->put("buyer/buyer_banners/" . $fileName, $imageData);
+        Storage::disk("public")->put("buyer/banner/" . $fileName, $imageData);
 
         buyer_banners::create(["image" => $fileName, "country" => $request->country]);
         return Response()->json(["error" => false, "msg" => "Successfully Banner Added"]);
@@ -93,7 +93,7 @@ class BannerController extends Controller
         $fileName = uniqid() . '.' . $extension;
         $imageData = base64_decode($imageData);
 
-        Storage::disk("public")->put("buyer/buyer_banners/" . $fileName, $imageData);
+        Storage::disk("public")->put("buyer/banner/" . $fileName, $imageData);
 
         buyer_banners::where("id", $id)->update(["image" => $fileName, "country" => $request->country]);
         return Response()->json(["error" => false, "msg" => "Successfully Banner Update"]);
@@ -105,4 +105,10 @@ class BannerController extends Controller
         buyer_banners::where("id", $id)->delete();
         return Response()->json(["error" => false, "msg" => "Successfully Banner Deleted"]);
     }
+
+
+
+
+
+
 }
