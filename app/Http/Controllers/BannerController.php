@@ -10,27 +10,28 @@ use Illuminate\Support\Facades\Storage;
 class BannerController extends Controller
 {
 
-    function GetBanners(){
+    function GetBanners()
+    {
 
 
-        $data=Banner::get();
+        $data = Banner::get();
 
-        if($data!=null){
+        if ($data != null) {
 
-            $banners=array();
+            $banners = array();
 
-            for($a=0; $a<count($data); $a++){
-                array_push($banners,config("app.url")."storage/seller/banner/".$data[$a]["image"]);
+            for ($a = 0; $a < count($data); $a++) {
+                array_push($banners, config("app.url") . "storage/buyer_banners/" . $data[$a]["image"]);
             }
 
             return response()->json([
-                "error"=>false,
-                "data"=>$banners
+                "error" => false,
+                "data" => $banners
             ]);
-        }else{
+        } else {
             return response()->json([
-                "error"=>true,
-                "msg"=>"Opps! Something is wrong!"
+                "error" => true,
+                "msg" => "Opps! Something is wrong!"
             ]);
         }
 
@@ -38,30 +39,31 @@ class BannerController extends Controller
     }
 
 
-    function getbuyerbanner(){
+    function getbuyerbanner()
+    {
 
-        $data=buyer_banners::get();
+        $data = buyer_banners::get();
 
-        if($data!=null){
+        if ($data != null) {
 
-            $banners=array();
+            $banners = array();
 
-            for($a=0; $a<count($data); $a++){
-                array_push($banners,[
-                    "id"=>$data[$a]["id"],
-                    "country"=>$data[$a]["country"],
-                    "img"=>config("app.url")."storage/seller/banner/".$data[$a]["image"],
+            for ($a = 0; $a < count($data); $a++) {
+                array_push($banners, [
+                    "id" => $data[$a]["id"],
+                    "country" => $data[$a]["country"],
+                    "img" => config("app.url") . "storage/buyer_banners/" . $data[$a]["image"],
                 ]);
             }
 
             return response()->json([
-                "error"=>false,
-                "data"=>$banners
+                "error" => false,
+                "data" => $banners
             ]);
-        }else{
+        } else {
             return response()->json([
-                "error"=>true,
-                "msg"=>"Opps! Something is wrong!"
+                "error" => true,
+                "msg" => "Opps! Something is wrong!"
             ]);
         }
 
@@ -69,41 +71,38 @@ class BannerController extends Controller
 
 
 
-    function store(Request $request){
+    function store(Request $request)
+    {
         list($type, $imageData) = explode(';', $request->image);
-        list(,$extension) = explode('/',$type);
-        list(,$imageData)      = explode(',', $imageData);
-        $fileName = uniqid().'.'.$extension;
+        list(, $extension) = explode('/', $type);
+        list(, $imageData) = explode(',', $imageData);
+        $fileName = uniqid() . '.' . $extension;
         $imageData = base64_decode($imageData);
 
-        Storage::disk("public")->put("buyer/banner/".$fileName,$imageData);
+        Storage::disk("public")->put("buyer/buyer_banners/" . $fileName, $imageData);
 
-        buyer_banners::create(["image"=>$fileName,"country"=>$request->country]);
-        return Response()->json(["error"=>false,"msg"=>"Successfully Banner Added"]);
+        buyer_banners::create(["image" => $fileName, "country" => $request->country]);
+        return Response()->json(["error" => false, "msg" => "Successfully Banner Added"]);
     }
 
-    function update($id,Request $request){
+    function update($id, Request $request)
+    {
         list($type, $imageData) = explode(';', $request->image);
-        list(,$extension) = explode('/',$type);
-        list(,$imageData)      = explode(',', $imageData);
-        $fileName = uniqid().'.'.$extension;
+        list(, $extension) = explode('/', $type);
+        list(, $imageData) = explode(',', $imageData);
+        $fileName = uniqid() . '.' . $extension;
         $imageData = base64_decode($imageData);
 
-        Storage::disk("public")->put("buyer/banner/".$fileName,$imageData);
+        Storage::disk("public")->put("buyer/buyer_banners/" . $fileName, $imageData);
 
-        buyer_banners::where("id",$id)->update(["image"=>$fileName,"country"=>$request->country]);
-        return Response()->json(["error"=>false,"msg"=>"Successfully Banner Update"]);
+        buyer_banners::where("id", $id)->update(["image" => $fileName, "country" => $request->country]);
+        return Response()->json(["error" => false, "msg" => "Successfully Banner Update"]);
     }
 
 
-    function delete($id){
-        buyer_banners::where("id",$id)->delete();
-        return Response()->json(["error"=>false,"msg"=>"Successfully Banner Deleted"]);
+    function delete($id)
+    {
+        buyer_banners::where("id", $id)->delete();
+        return Response()->json(["error" => false, "msg" => "Successfully Banner Deleted"]);
     }
-
-
-
-
-
-
 }
