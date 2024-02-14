@@ -19,13 +19,13 @@ class CountryController extends Controller
             array_push($new_data, [
                 "name" => $value->name,
                 "code" => $value->code,
-                "flag__" => config("app.url") . "storage/country/" . $value->flag,
+                "flag" => config("app.url") . "storage/country/" . $value->flag,
                 "dollar_rate" => $value->dollar_rate,
                 "currency_type" => $value->currency_type,
             ]);
         }
 
-        return response()->json(["error" => false, "data" => $new_data]);
+        return response()->json(["error" => false, "data__" => $new_data]);
     }
 
 
