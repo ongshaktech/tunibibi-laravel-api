@@ -111,6 +111,6 @@ class SellerController extends Controller
 
     function Country(){
         $data=DB::table("country")->get();
-        return response()->json(["error"=>false,"data"=>$data]);
+        return response()->json(["error"=>false,"data_"=>$data]);
     }
 }
