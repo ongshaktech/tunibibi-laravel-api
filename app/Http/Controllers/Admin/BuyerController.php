@@ -44,7 +44,7 @@ class BuyerController extends Controller
 
         return response()->json([
             "error" => false,
-            "data" => $data
+            "data" => $buyer_arr
         ]);
     }
 
