@@ -219,7 +219,7 @@ class OrderController extends Controller
 
     }
 
-    function VerifyOrderPayment($id){
+    function VerifyOrderPayment(Request $request, $id){
 
         OrderPayment::where("id",$id)->update([
             "is_verified"=>1
@@ -298,7 +298,7 @@ class OrderController extends Controller
 
     }
 
-    function DeliveryVerifyOrderPayment($id){
+    function DeliveryVerifyOrderPayment(Request $request, $id){
 
         OrderPayment::where("id",$id)->update([
             "is_verified"=>1
