@@ -651,7 +651,7 @@ Route::prefix("admin")->group(function (){
         Route::post("/orders/confirm_payment/{id}",[\App\Http\Controllers\Admin\OrderController::class,"VerifyOrderPayment"]);
 
         Route::get("/orders/delivery/pending",[\App\Http\Controllers\Admin\OrderController::class,"DeliveryPendingOrders"]);
-        Route::get("/orders/delivery/confirm_payment/{id}",[\App\Http\Controllers\Admin\OrderController::class,"DeliveryVerifyOrderPayment"]);
+        Route::post("/orders/delivery/confirm_payment/{id}",[\App\Http\Controllers\Admin\OrderController::class,"DeliveryVerifyOrderPayment"]);
 
         Route::post("/orders/all",[\App\Http\Controllers\Admin\OrderController::class,"AllOrders"]);
 
